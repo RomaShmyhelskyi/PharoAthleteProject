@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #tests }
-AthleteTest >> testAthleteCreation [
+AthleteTest >> testInitialize [
 
 	| a |
 	a := Athlete new.
