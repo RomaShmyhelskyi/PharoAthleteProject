@@ -26,6 +26,20 @@ Class {
 	#category : #'Project-Athlete'
 }
 
+{ #category : #'instance creation' }
+Athlete class >> newWithSurname: aSurname age: anAge citizenship: aCitizenship salary: aSalary [
+
+(aSurname isEmptyOrNil or: [anAge < 4 or: [ aCitizenship isEmptyOrNil or: [aSalary < 0]]]) 
+ifTrue: [ self error: 'Invalid athlete parameters' ].
+
+	^ self new
+		  surname: aSurname;
+		  age: anAge;
+		  citizenship: aCitizenship;
+		  salary: aSalary;
+		  yourself
+]
+
 { #category : #comparing }
 Athlete >> < anObject [
 
@@ -81,7 +95,9 @@ Athlete >> initialize [
 { #category : #printing }
 Athlete >> printOn: aStream [
 
-	self subclassResponsibility
+	super printOn: aStream.
+	aStream nextPutAll: ' with value: '.
+	surname printOn: aStream
 ]
 
 { #category : #accessing }
