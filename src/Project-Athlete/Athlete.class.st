@@ -47,6 +47,12 @@ Athlete >> < anObject [
 ]
 
 { #category : #comparing }
+Athlete >> <= anObject [
+
+	^ self salary <= anObject salary
+]
+
+{ #category : #comparing }
 Athlete >> = anObject [
 
 	^ self salary = anObject salary
@@ -56,6 +62,12 @@ Athlete >> = anObject [
 Athlete >> > anObject [
 
 	^ self salary > anObject salary
+]
+
+{ #category : #comparing }
+Athlete >> >= anObject [
+
+	^ self salary >= anObject salary
 ]
 
 { #category : #accessing }
