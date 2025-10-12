@@ -71,6 +71,12 @@ TennisPlayer >> addPrizeMoney: amount [
 	].
 ]
 
+{ #category : #calculating }
+TennisPlayer >> calculateIncome [
+    "Розраховує дохід тенісиста - делегує до salary"
+    ^ self salary
+]
+
 { #category : #initialization }
 TennisPlayer >> initialize [
 	super initialize.
@@ -81,6 +87,12 @@ TennisPlayer >> initialize [
 { #category : #accessing }
 TennisPlayer >> lastThreePrizeMoney [
 	^ lastThreePrizeMoney
+]
+
+{ #category : #accessing }
+TennisPlayer >> lastThreePrizeMoney: aCollection [
+    "Встановлює призові за останні три турніри"
+    lastThreePrizeMoney := aCollection
 ]
 
 { #category : #printing }
