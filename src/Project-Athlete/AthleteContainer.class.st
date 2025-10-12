@@ -49,69 +49,37 @@ AthleteContainer >> addAthleteDialog [
 ]
 
 { #category : #adding }
-AthleteContainer >> addFootballerWithSurname: surname age: age citizenship: citizenship [
-    "Додає футболіста через діалог"
-    | footballer club contract goals |
-    
-    club := UIManager default 
-        request: 'Клуб:' 
-        initialAnswer: 'Динамо Київ'.
-    club ifNil: [ ^ self ].
-    
-    contract := UIManager default 
-        request: 'Річний контракт (грн):' 
-        initialAnswer: '5000000'.
-    contract ifNil: [ ^ self ].
-    
-    goals := UIManager default 
-        request: 'Забито голів:' 
-        initialAnswer: '20'.
-    goals ifNil: [ ^ self ].
-    
+AthleteContainer >> addFootballerWithSurname: surname age: age citizenship: citizenship club: club
+annualContract: annualContract goalsScored: goalsScored [
+    "Додає футболіста з базовими параметрами (без діалогу)"
+    | footballer |
     footballer := Footballer new.
     footballer surname: surname.
     footballer age: age.
     footballer citizenship: citizenship.
-    footballer club: club.
-    footballer annualContract: contract asNumber.
-    footballer goalsScored: goals asNumber.
+    footballer club: ''.
+    footballer annualContract: 0.
+    footballer goalsScored: 0.
     
     self add: footballer.
-    
-    UIManager default inform: 'Футболіста ', surname, ' додано!'
+    ^ footballer
 ]
 
 { #category : #adding }
-AthleteContainer >> addTennisPlayerWithSurname: surname age: age citizenship: citizenship [
-    "Додає тенісиста через діалог"
-    | player ranking salary prizeMoney |
-    
-    ranking := UIManager default 
-        request: 'Світовий рейтинг:' 
-        initialAnswer: '50'.
-    ranking ifNil: [ ^ self ].
-    
-    salary := UIManager default 
-        request: 'Зарплата (грн):' 
-        initialAnswer: '3000000'.
-    salary ifNil: [ ^ self ].
-    
-    prizeMoney := UIManager default 
-        request: 'Призові за останні 3 турніри (через кому):' 
-        initialAnswer: '100000,200000,150000'.
-    prizeMoney ifNil: [ ^ self ].
-    
+AthleteContainer >> addTennisPlayerWithSurname: surname age: age citizenship: citizenship worldRanking: worldRanking salary: salary prizeMoney: prizeMoney [
+    "Додає тенісиста з базовими параметрами (без діалогу)"
+    | player |
     player := TennisPlayer new.
     player surname: surname.
     player age: age.
     player citizenship: citizenship.
-    player worldRanking: ranking asNumber.
-    player salary: salary asNumber.
-    "Додай призові якщо є відповідний метод"
+    player worldRanking: worldRanking.
+    player salary: salary.
+    "Додай призові якщо є відповідний метод, наприклад:"
+    "player prizeMoney: prizeMoney."
     
     self add: player.
-    
-    UIManager default inform: 'Тенісиста ', surname, ' додано!'
+    ^ player
 ]
 
 { #category : #accessing }
