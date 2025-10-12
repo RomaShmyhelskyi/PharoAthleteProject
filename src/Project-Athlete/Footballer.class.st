@@ -36,6 +36,36 @@ Class {
 	#category : #'Project-Athlete'
 }
 
+{ #category : #comparing }
+Footballer >> < anotherAthlete [
+    "Перевіряє чи дохід поточного спортсмена менший"
+    ^ self calculateIncome < anotherAthlete calculateIncome
+]
+
+{ #category : #comparing }
+Footballer >> <= anotherAthlete [
+    "Перевіряє чи дохід поточного спортсмена менший або рівний"
+    ^ self calculateIncome <= anotherAthlete calculateIncome
+]
+
+{ #category : #comparing }
+Footballer >> = anotherAthlete [
+    "Перевіряє чи доходи спортсменів рівні"
+    ^ self calculateIncome = anotherAthlete calculateIncome
+]
+
+{ #category : #comparing }
+Footballer >> > anotherAthlete [
+    "Перевіряє чи дохід поточного спортсмена більший"
+    ^ self calculateIncome > anotherAthlete calculateIncome
+]
+
+{ #category : #comparing }
+Footballer >> >= anotherAthlete [
+    "Перевіряє чи дохід поточного спортсмена більший або рівний"
+    ^ self calculateIncome >= anotherAthlete calculateIncome
+]
+
 { #category : #accessing }
 Footballer >> annualContract [
     "Повертає розмір річного контракту"
@@ -70,13 +100,9 @@ Footballer >> club: aString [
 
 { #category : #comparing }
 Footballer >> compareIncomeTo: anotherAthlete [
-    "Порівнює прибутковість з іншим спортсменом. Повертає 1 якщо більше, -1 якщо менше, 0 якщо рівні"
-    | myIncome theirIncome |
-    myIncome := self calculateIncome.
-    theirIncome := anotherAthlete calculateIncome.
-    
-    myIncome > theirIncome ifTrue: [ ^ 1 ].
-    myIncome < theirIncome ifTrue: [ ^ -1 ].
+    "Порівнює прибутковість з іншим спортсменом"
+    self < anotherAthlete ifTrue: [ ^ -1 ].
+    self > anotherAthlete ifTrue: [ ^ 1 ].
     ^ 0
 ]
 
