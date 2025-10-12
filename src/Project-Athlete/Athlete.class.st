@@ -26,6 +26,21 @@ Class {
 	#category : #'Project-Athlete'
 }
 
+{ #category : #'file operations' }
+Athlete class >> loadAthletesFromFile: filename [
+	"Завантажує колекцію спортсменів з файлу FUEL"
+	| file loadedAthletes |
+	file := filename asFileReference.
+	file exists ifFalse: [ 
+		Error signal: 'Файл не знайдено: ', file fullName 
+	].
+	loadedAthletes := FLMaterializer materializeFromFileNamed: file fullName.
+	Transcript 
+		show: 'Завантажено ', loadedAthletes size printString, 
+		' спортсменів з файлу: ', file fullName; cr.
+	^ loadedAthletes
+]
+
 { #category : #'instance creation' }
 Athlete class >> newWithSurname: aSurname age: anAge citizenship: aCitizenship salary: aSalary [
 
@@ -38,6 +53,18 @@ ifTrue: [ self error: 'Invalid athlete parameters' ].
 		  citizenship: aCitizenship;
 		  salary: aSalary;
 		  yourself
+]
+
+{ #category : #'file operations' }
+Athlete class >> saveAthletes: aCollection toFile: filename [
+	"Зберігає колекцію спортсменів (тенісистів та футболістів) у файл у форматі FUEL"
+	| file |
+	file := filename asFileReference.
+	FLSerializer serialize: aCollection toFileNamed: file fullName.
+	Transcript 
+		show: 'Збережено ', aCollection size printString, 
+		' спортсменів у файл: ', file fullName; cr.
+	^ file
 ]
 
 { #category : #comparing }
