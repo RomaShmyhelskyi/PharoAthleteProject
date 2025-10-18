@@ -1,3 +1,27 @@
+"
+Я є контейнером для управління колекціями спортсменів (футболістів та тенісистів).
+
+Я надаю функціональність для:
+- Зберігання спортсменів у впорядкованій колекції
+- Додавання спортсменів програмно або через інтерактивні діалоги
+- Пошуку найбагатшого спортсмена за доходом
+- Фільтрації спортсменів за громадянством
+- Виконання пакетних операцій (наприклад, збільшення віку)
+- Виведення всіх спортсменів з їхнім доходом
+
+Приклад використання:
+    container := AthleteContainer new.
+    container addFootballerWithSurname: 'Шевченко' age: 35 
+        citizenship: 'Україна' club: 'Динамо' contract: 5000000 goals: 25.
+    container addAthleteDialog.
+    richest := container findRichestAthlete.
+    ukrainians := container ukrainianAthletes.
+    container increaseAgeByOneYear.
+    container printAll.
+
+Змінні екземпляра:
+    athletes    <OrderedCollection>    Колекція об'єктів спортсменів
+"
 Class {
 	#name : #AthleteContainer,
 	#superclass : #Object,
@@ -17,7 +41,7 @@ AthleteContainer >> add: anAthlete [
 { #category : #adding }
 AthleteContainer >> addAthleteDialog [
     "Діалог для додавання нового спортсмена"
-    | athleteType surname age citizenship |
+    | athleteType surname age citizenship club annualContract goalsScored worldRanking salary prizeMoney| 
     
     "Вибір типу спортсмена"
     athleteType := UIManager default 
@@ -41,11 +65,43 @@ AthleteContainer >> addAthleteDialog [
         request: 'Громадянство:' 
         initialAnswer: 'Україна'.
     citizenship ifNil: [ ^ self ].
+
+    club := UIManager default 
+        request: 'Клуб' 
+        initialAnswer: 'Динамо Київ'.
+    club ifNil: [ ^ self ].
+
+    annualContract := UIManager default 
+        request: 'Контракт' 
+        initialAnswer: '0'.
+    annualContract ifNil: [ ^ self ].
+
+    goalsScored := UIManager default 
+        request: 'Забиті' 
+        initialAnswer: '0'.
+    goalsScored ifNil: [ ^ self ].
+
+    worldRanking := UIManager default 
+        request: 'Рейтинг' 
+        initialAnswer: '0'.
+    worldRanking ifNil: [ ^ self ].
+
+    salary := UIManager default 
+        request: 'ЗП' 
+        initialAnswer: '0'.
+    salary ifNil: [ ^ self ].
+
+    prizeMoney := UIManager default 
+        request: 'Призові' 
+        initialAnswer: '0'.
+    prizeMoney ifNil: [ ^ self ].
+
     
     "Створення спортсмена відповідного типу"
     athleteType = 1 
-        ifTrue: [ self addFootballerWithSurname: surname age: age asNumber citizenship: citizenship ]
-        ifFalse: [ self addTennisPlayerWithSurname: surname age: age asNumber citizenship: citizenship ]
+        ifTrue: [ self addFootballerWithSurname: surname age: age citizenship: citizenship club: club
+annualContract: annualContract goalsScored: goalsScored ]
+        ifFalse: [ self addTennisPlayerWithSurname: surname age: age citizenship: citizenship worldRanking: worldRanking salary: salary prizeMoney: prizeMoney ]
 ]
 
 { #category : #adding }
@@ -58,8 +114,8 @@ annualContract: annualContract goalsScored: goalsScored [
     footballer age: age.
     footballer citizenship: citizenship.
     footballer club: ''.
-    footballer annualContract: 0.
-    footballer goalsScored: 0.
+    footballer annualContract: annualContract.
+    footballer goalsScored: goalsScored.
     
     self add: footballer.
     ^ footballer
