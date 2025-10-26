@@ -32,10 +32,16 @@ Class {
 }
 
 { #category : #accessing }
-AthleteContainer >> add: anAthlete [
-    "Додає спортсмена до контейнера"
-    athletes add: anAthlete.
-    ^ anAthlete
+AthleteContainer >> add: anObject [
+	"Додає спортсмена до контейнера"
+
+	(anObject isKindOf: Athlete)
+		ifTrue: [ athletes add: anObject ]
+		ifFalse: [
+			self error:
+				'Недопустимий тип обʼєкта для колекції атлетів: ' , anObject ].
+
+	^ anObject
 ]
 
 { #category : #adding }
@@ -168,9 +174,10 @@ AthleteContainer >> increaseAgeByOneYear [
 
 { #category : #initialization }
 AthleteContainer >> initialize [
-    "Ініціалізація контейнера з порожньою колекцією"
-    super initialize.
-    athletes := OrderedCollection new
+	"Ініціалізація контейнера з порожньою колекцією"
+
+	super initialize.
+	athletes := OrderedCollection new
 ]
 
 { #category : #searching }

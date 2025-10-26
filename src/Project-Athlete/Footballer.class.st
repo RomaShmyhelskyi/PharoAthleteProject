@@ -38,32 +38,37 @@ Class {
 
 { #category : #comparing }
 Footballer >> < anotherAthlete [
-    "Перевіряє чи дохід поточного спортсмена менший"
-    ^ self calculateIncome < anotherAthlete calculateIncome
+	"Перевіряє чи дохід поточного спортсмена менший"
+
+	^ self calculateIncome < anotherAthlete calculateIncome
 ]
 
 { #category : #comparing }
 Footballer >> <= anotherAthlete [
-    "Перевіряє чи дохід поточного спортсмена менший або рівний"
-    ^ self calculateIncome <= anotherAthlete calculateIncome
+	"Перевіряє чи дохід поточного спортсмена менший або рівний"
+
+	^ self calculateIncome <= anotherAthlete calculateIncome
 ]
 
 { #category : #comparing }
 Footballer >> = anotherAthlete [
-    "Перевіряє чи доходи спортсменів рівні"
-    ^ self calculateIncome = anotherAthlete calculateIncome
+	"Перевіряє чи доходи спортсменів рівні"
+
+	^ self calculateIncome = anotherAthlete calculateIncome
 ]
 
 { #category : #comparing }
 Footballer >> > anotherAthlete [
-    "Перевіряє чи дохід поточного спортсмена більший"
-    ^ self calculateIncome > anotherAthlete calculateIncome
+	"Перевіряє чи дохід поточного спортсмена більший"
+
+	^ anotherAthlete calculateIncome < self calculateIncome
 ]
 
 { #category : #comparing }
 Footballer >> >= anotherAthlete [
-    "Перевіряє чи дохід поточного спортсмена більший або рівний"
-    ^ self calculateIncome >= anotherAthlete calculateIncome
+	"Перевіряє чи дохід поточного спортсмена більший або рівний"
+
+	^ self calculateIncome >= anotherAthlete calculateIncome
 ]
 
 { #category : #accessing }
@@ -74,8 +79,18 @@ Footballer >> annualContract [
 
 { #category : #accessing }
 Footballer >> annualContract: aNumber [
-    "Встановлює розмір річного контракту"
-    annualContract := aNumber
+	"Встановлює розмір річного контракту"
+
+	aNumber isNumber
+		ifTrue: [
+			aNumber > 0
+				ifTrue: [ annualContract := aNumber ]
+				ifFalse: [
+				self error: 'Хибне значення розміру річного контракту: ' , aNumber ] ]
+		ifFalse: [
+			self error:
+				'Недопустиме значення розміру річного контракту: ' , aNumber ].
+	^ aNumber
 ]
 
 { #category : #calculating }
@@ -94,8 +109,12 @@ Footballer >> club [
 
 { #category : #accessing }
 Footballer >> club: aString [
-    "Встановлює назву клубу"
-    club := aString
+	"Встановлює назву клубу"
+
+	aString isString
+		ifTrue: [ club := aString ]
+		ifFalse: [ self error: 'Недопустиме значення клубу: ' , aString ].
+	^ aString
 ]
 
 { #category : #comparing }
@@ -114,17 +133,28 @@ Footballer >> goalsScored [
 
 { #category : #accessing }
 Footballer >> goalsScored: aNumber [
-    "Встановлює кількість забитих голів"
-    goalsScored := aNumber
+	"Встановлює кількість забитих голів"
+
+	aNumber isInteger
+		ifTrue: [
+			aNumber > 0
+				ifTrue: [ goalsScored := aNumber ]
+				ifFalse: [
+				self error: 'Хибне значення кількості забитих голів: ' , aNumber ] ]
+		ifFalse: [
+			self error:
+				'Недопустиме значення кількості забитих голів: ' , aNumber ].
+	^ aNumber
 ]
 
 { #category : #initialization }
 Footballer >> initialize [
-    "Ініціалізація футболіста з базовими значеннями"
-    super initialize.
-    club := ''.
-    annualContract := 0.
-    goalsScored := 0
+	"Ініціалізація футболіста з базовими значеннями"
+
+	super initialize.
+	club := ''.
+	annualContract := 0.
+	goalsScored := 0
 ]
 
 { #category : #printing }

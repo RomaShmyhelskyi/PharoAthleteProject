@@ -64,11 +64,18 @@ TennisPlayer >> > anAthlete [
 
 { #category : #operations }
 TennisPlayer >> addPrizeMoney: amount [
-"Додає призові з нового турніру. Зберігає тільки останні 3 турніри"
-	lastThreePrizeMoney addFirst: amount.
-	lastThreePrizeMoney size > 3 ifTrue: [ 
-		lastThreePrizeMoney removeLast 
-	].
+	"Додає призові з нового турніру. Зберігає тільки останні 3 турніри"
+
+	amount isNumber
+		ifTrue: [
+			amount > 0
+				ifTrue: [
+					lastThreePrizeMoney addFirst: amount.
+					lastThreePrizeMoney removeLast ]
+				ifFalse: [ self error: 'Хибне значення: ' , amount ] ]
+		ifFalse: [
+			self error:
+				'Недопустиме значення призових з останнього турніру: ' , amount ]
 ]
 
 { #category : #calculating }
@@ -79,9 +86,10 @@ TennisPlayer >> calculateIncome [
 
 { #category : #initialization }
 TennisPlayer >> initialize [
+
 	super initialize.
 	worldRanking := 0.
-	lastThreePrizeMoney := OrderedCollection new.
+	lastThreePrizeMoney := OrderedCollection new: 3
 ]
 
 { #category : #accessing }
@@ -91,8 +99,9 @@ TennisPlayer >> lastThreePrizeMoney [
 
 { #category : #accessing }
 TennisPlayer >> lastThreePrizeMoney: aCollection [
-    "Встановлює призові за останні три турніри"
-    lastThreePrizeMoney := aCollection
+	"Встановлює призові за останні три турніри"
+
+	lastThreePrizeMoney := aCollection
 ]
 
 { #category : #printing }
@@ -126,5 +135,12 @@ TennisPlayer >> worldRanking [
 
 { #category : #accessing }
 TennisPlayer >> worldRanking: anInteger [
-	worldRanking := anInteger
+
+	anInteger isInteger
+		ifTrue: [
+			anInteger > 0
+				ifTrue: [ worldRanking := anInteger ]
+				ifFalse: [ self error: 'Хибне значення рейтингу: ' , anInteger ] ]
+		ifFalse: [
+		self error: 'Недопустиме значення рейтингу: ' , anInteger ]
 ]

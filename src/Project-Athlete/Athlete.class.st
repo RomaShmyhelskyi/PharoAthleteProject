@@ -27,6 +27,29 @@ Class {
 }
 
 { #category : #'file operations' }
+Athlete class >> example_1 [
+
+	<script>
+	| a |
+	a := Athlete
+		     newWithSurname: 'Alvarez'
+		     age: 28
+		     citizenship: 'Mexican'
+		     salary: 35000.
+
+
+	Transcript
+		show: a surname;
+		space;
+		show: a age asString;
+		space;
+		show: a citizenship;
+		space;
+		show: a salary asString;
+		cr
+]
+
+{ #category : #'file operations' }
 Athlete class >> loadAthletesFromFile: filename [
 	"Завантажує колекцію спортсменів з файлу FUEL"
 	| file loadedAthletes |
@@ -88,7 +111,7 @@ Athlete >> = anObject [
 { #category : #comparing }
 Athlete >> > anObject [
 
-	^ self salary > anObject salary
+	^ anObject salary < self salary
 ]
 
 { #category : #comparing }
@@ -106,7 +129,13 @@ Athlete >> age [
 { #category : #accessing }
 Athlete >> age: anObject [
 
-	age := anObject
+	anObject isNumber
+		ifTrue: [
+			anObject > 0
+				ifTrue: [ age := anObject ]
+				ifFalse: [ self error: 'Значення віку хибне: ' , anObject ] ]
+		ifFalse: [ self error: 'Недопустиме значення віку: ' , anObject ].
+	^ anObject
 ]
 
 { #category : #accessing }
@@ -118,7 +147,11 @@ Athlete >> citizenship [
 { #category : #accessing }
 Athlete >> citizenship: anObject [
 
-	citizenship := anObject
+	anObject isString
+		ifTrue: [ citizenship := anObject ]
+		ifFalse: [
+		self error: 'Недопустиме значення громадянства: ' , anObject ].
+	^ anObject
 ]
 
 { #category : #initialization }
@@ -148,7 +181,14 @@ Athlete >> salary [
 { #category : #accessing }
 Athlete >> salary: anObject [
 
-	salary := anObject
+	anObject isNumber
+		ifTrue: [
+			anObject > 0
+				ifTrue: [ salary := anObject ]
+				ifFalse: [ self error: 'Хибне значення заробітку: ' , anObject ] ]
+		ifFalse: [
+		self error: 'Недопустиме значення заробітку: ' , anObject ].
+	^ anObject
 ]
 
 { #category : #accessing }
@@ -160,5 +200,8 @@ Athlete >> surname [
 { #category : #accessing }
 Athlete >> surname: anObject [
 
-	surname := anObject
+	anObject isString
+		ifTrue: [ surname := anObject ]
+		ifFalse: [ self error: 'Недопустиме значення прізвища: ' , anObject ].
+	^ anObject
 ]
