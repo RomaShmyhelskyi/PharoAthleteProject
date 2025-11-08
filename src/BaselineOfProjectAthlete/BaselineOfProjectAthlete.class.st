@@ -25,5 +25,5 @@ BaselineOfProjectAthlete >> baseline: spec [
 	spec for: #common do: [
 		spec repository:
 			'github://RomaShmyhelskyi/PharoAthleteProject:master/src'.
-		spec package: 'Project-Athlete' ]
+		spec package: 'ProjectAthlete' ]
 ]
