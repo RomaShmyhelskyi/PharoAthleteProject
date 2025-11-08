@@ -50,18 +50,18 @@ Athlete class >> example_1 [
 ]
 
 { #category : #'file operations' }
-Athlete class >> loadAthleteFromFile: filename [
-	"Завантажує одного спортсмена з файлу FUEL"
-	| file loadedAthlete |
+Athlete class >> loadAthletesFromFile: filename [
+	"Завантажує колекцію спортсменів з файлу FUEL"
+	| file loadedAthletes |
 	file := filename asFileReference.
 	file exists ifFalse: [ 
 		Error signal: 'Файл не знайдено: ', file fullName 
 	].
-	loadedAthlete := FLMaterializer materializeFromFileNamed: file fullName.
+	loadedAthletes := FLMaterializer materializeFromFileNamed: file fullName.
 	Transcript 
-		show: 'Завантажено спортсмена ', loadedAthlete surname, 
-		' з файлу: ', file fullName; cr.
-	^ loadedAthlete
+		show: 'Завантажено ', loadedAthletes size printString, 
+		' спортсменів з файлу: ', file fullName; cr.
+	^ loadedAthletes
 ]
 
 { #category : #'instance creation' }
@@ -79,14 +79,14 @@ ifTrue: [ self error: 'Invalid athlete parameters' ].
 ]
 
 { #category : #'file operations' }
-Athlete class >> saveAthlete: anAthlete toFile: filename [
-	"Зберігає одного спортсмена у файл у форматі FUEL"
+Athlete class >> saveAthletes: aCollection toFile: filename [
+	"Зберігає колекцію спортсменів (тенісистів та футболістів) у файл у форматі FUEL"
 	| file |
 	file := filename asFileReference.
-	FLSerializer serialize: anAthlete toFileNamed: file fullName.
+	FLSerializer serialize: aCollection toFileNamed: file fullName.
 	Transcript 
-		show: 'Збережено спортсмена ', anAthlete surname, 
-		' у файл: ', file fullName; cr.
+		show: 'Збережено ', aCollection size printString, 
+		' спортсменів у файл: ', file fullName; cr.
 	^ file
 ]
 

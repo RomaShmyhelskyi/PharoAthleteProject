@@ -47,6 +47,21 @@ Class {
 	#category : #'Project-Athlete'
 }
 
+{ #category : #comparing }
+TennisPlayer >> < anAthlete [
+	^ self salary < anAthlete salary
+]
+
+{ #category : #comparing }
+TennisPlayer >> = anAthlete [
+	^ self salary = anAthlete salary
+]
+
+{ #category : #comparing }
+TennisPlayer >> > anAthlete [
+	^ self salary > anAthlete salary
+]
+
 { #category : #operations }
 TennisPlayer >> addPrizeMoney: amount [
 	"Додає призові з нового турніру. Зберігає тільки останні 3 турніри"
