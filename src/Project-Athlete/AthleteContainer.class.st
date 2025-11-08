@@ -2,7 +2,7 @@
 Я є контейнером для управління колекціями спортсменів (футболістів та тенісистів).
 
 Я надаю функціональність для:
-- Зберігання спортсменів у впорядкованій колекції
+- Зберігання спортсменів у порядковій колекції
 - Додавання спортсменів програмно або через інтерактивні діалоги
 - Пошуку найбагатшого спортсмена за доходом
 - Фільтрації спортсменів за громадянством
@@ -152,16 +152,9 @@ AthleteContainer >> athletes [
 
 { #category : #searching }
 AthleteContainer >> findRichestAthlete [
-    "Знаходить спортсмена з найбільшим доходом"
-    | richest |
-    athletes ifEmpty: [ ^ nil ].
-    
-    richest := athletes first.
-    athletes do: [ :athlete |
-        athlete > richest ifTrue: [ richest := athlete ]
-    ].
-    
-    ^ richest
+	"Знаходить спортсмена з найбільшим доходом"
+
+	^ athletes max: [ :a :b | a salary <= b salary ]
 ]
 
 { #category : #operations }

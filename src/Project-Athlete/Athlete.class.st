@@ -20,8 +20,7 @@ Class {
 	#instVars : [
 		'surname',
 		'age',
-		'citizenship',
-		'salary'
+		'citizenship'
 	],
 	#category : #'Project-Athlete'
 }
@@ -31,22 +30,10 @@ Athlete class >> example_1 [
 
 	<script>
 	| a |
-	a := Athlete
-		     newWithSurname: 'Alvarez'
-		     age: 28
-		     citizenship: 'Mexican'
-		     salary: 35000.
+	a := self newWithSurname: 'Alvarez' age: 28 citizenship: 'Mexican'.
 
 
-	Transcript
-		show: a surname;
-		space;
-		show: a age asString;
-		space;
-		show: a citizenship;
-		space;
-		show: a salary asString;
-		cr
+	Transcript show: a
 ]
 
 { #category : #'file operations' }
@@ -148,8 +135,7 @@ Athlete >> initialize [
 	super initialize.
 	surname := ''.
 	age := 0.
-	citizenship := ''.
-	salary := 0
+	citizenship := ''
 ]
 
 { #category : #printing }
@@ -168,12 +154,6 @@ Athlete >> printOn: aStream [
 
 { #category : #accessing }
 Athlete >> salary [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-Athlete >> salary: anObject [
 
 	^ self subclassResponsibility
 ]
