@@ -10,7 +10,7 @@ It's API is
 - `salary`
 
 
-Its creation message is `initialize`
+Its creation message is `newWithSurname:age:citizenship:`
 
 
 "
@@ -65,16 +65,16 @@ Athlete class >> loadAthletesFromFile: filename [
 ]
 
 { #category : #'instance creation' }
-Athlete class >> newWithSurname: aSurname age: anAge citizenship: aCitizenship salary: aSalary [
+Athlete class >> newWithSurname: aSurname age: anAge citizenship: aCitizenship [
 
-(aSurname isEmptyOrNil or: [anAge < 4 or: [ aCitizenship isEmptyOrNil or: [aSalary < 0]]]) 
-ifTrue: [ self error: 'Invalid athlete parameters' ].
+	(aSurname isEmptyOrNil or: [
+		 anAge < 4 or: [ aCitizenship isEmptyOrNil ] ]) ifTrue: [
+		self error: 'Invalid athlete parameters' ].
 
 	^ self new
 		  surname: aSurname;
 		  age: anAge;
 		  citizenship: aCitizenship;
-		  salary: aSalary;
 		  yourself
 ]
 
@@ -97,12 +97,6 @@ Athlete >> < anObject [
 ]
 
 { #category : #comparing }
-Athlete >> <= anObject [
-
-	^ self salary <= anObject salary
-]
-
-{ #category : #comparing }
 Athlete >> = anObject [
 
 	^ self salary = anObject salary
@@ -111,13 +105,7 @@ Athlete >> = anObject [
 { #category : #comparing }
 Athlete >> > anObject [
 
-	^ anObject salary < self salary
-]
-
-{ #category : #comparing }
-Athlete >> >= anObject [
-
-	^ self salary >= anObject salary
+	^ anObject < self
 ]
 
 { #category : #accessing }
@@ -166,29 +154,28 @@ Athlete >> initialize [
 
 { #category : #printing }
 Athlete >> printOn: aStream [
+	"Метод для виведення інформації про атлета"
 
-	super printOn: aStream.
-	aStream nextPutAll: ' with value: '.
-	surname printOn: aStream
+	aStream
+		nextPutAll: 'Атлет: ';
+		nextPutAll: surname;
+		nextPutAll: '(';
+		print: age;
+		nextPutAll: ' р., ';
+		nextPutAll: citizenship;
+		nextPutAll: ')'
 ]
 
 { #category : #accessing }
 Athlete >> salary [
 
-	^ salary
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 Athlete >> salary: anObject [
 
-	anObject isNumber
-		ifTrue: [
-			anObject > 0
-				ifTrue: [ salary := anObject ]
-				ifFalse: [ self error: 'Хибне значення заробітку: ' , anObject ] ]
-		ifFalse: [
-		self error: 'Недопустиме значення заробітку: ' , anObject ].
-	^ anObject
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

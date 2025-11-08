@@ -44,13 +44,6 @@ Footballer >> < anotherAthlete [
 ]
 
 { #category : #comparing }
-Footballer >> <= anotherAthlete [
-	"Перевіряє чи дохід поточного спортсмена менший або рівний"
-
-	^ self calculateIncome <= anotherAthlete calculateIncome
-]
-
-{ #category : #comparing }
 Footballer >> = anotherAthlete [
 	"Перевіряє чи доходи спортсменів рівні"
 
@@ -62,13 +55,6 @@ Footballer >> > anotherAthlete [
 	"Перевіряє чи дохід поточного спортсмена більший"
 
 	^ anotherAthlete calculateIncome < self calculateIncome
-]
-
-{ #category : #comparing }
-Footballer >> >= anotherAthlete [
-	"Перевіряє чи дохід поточного спортсмена більший або рівний"
-
-	^ self calculateIncome >= anotherAthlete calculateIncome
 ]
 
 { #category : #accessing }
