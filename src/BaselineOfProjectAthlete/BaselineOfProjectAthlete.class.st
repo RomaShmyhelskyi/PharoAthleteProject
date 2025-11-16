@@ -19,11 +19,11 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfProjectAthlete >> baseline: spec [
+BaselineOfProjectAthlete class >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
 		spec repository:
-			'github://RomaShmyhelskyi/PharoAthleteProject:master/src'.
-		spec package: 'ProjectAthlete' ]
+			'github://RomaShmyhelskyi/PharoAthleteProject:main/src'.
+		spec package: 'Project-Athlete' ]
 ]
