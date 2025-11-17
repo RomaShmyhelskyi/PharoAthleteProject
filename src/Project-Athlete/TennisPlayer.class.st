@@ -47,6 +47,25 @@ Class {
 	#category : #'Project-Athlete'
 }
 
+{ #category : #'instance creation' }
+TennisPlayer class >> newWithSurname: aSurname age: anAge citizenship: aCitizenship worldRanking: aRanking lastThreePrizeMoney: aPrizeMoney [
+	"worldRanking lastThreePrizeMoney"
+
+	(aSurname isEmptyOrNil or: [
+		 anAge < 4 or: [
+			 aCitizenship isEmptyOrNil or: [
+				 aRanking < 0 or: [ aPrizeMoney sum < 3000 ] ] ] ]) ifTrue: [
+		self error: 'Invalid Footballer parameters' ].
+
+	^ self new
+		  surname: aSurname;
+		  age: anAge;
+		  citizenship: aCitizenship;
+		  worldRanking: aRanking;
+		  lastThreePrizeMoney: aPrizeMoney;
+		  yourself
+]
+
 { #category : #operations }
 TennisPlayer >> addPrizeMoney: amount [
 	"Додає призові з нового турніру. Зберігає тільки останні 3 турніри"

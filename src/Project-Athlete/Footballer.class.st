@@ -36,25 +36,24 @@ Class {
 	#category : #'Project-Athlete'
 }
 
-{ #category : #comparing }
-Footballer >> < anotherAthlete [
-	"Перевіряє чи дохід поточного спортсмена менший"
+{ #category : #'instance creation' }
+Footballer class >> newWithSurname: aSurname age: anAge citizenship: aCitizenship club: aClub annualContract: aContract goalsScored: aGoalsScored [
 
-	^ self calculateIncome < anotherAthlete calculateIncome
-]
+	(aSurname isEmptyOrNil or: [
+		 anAge < 4 or: [
+			 aCitizenship isEmptyOrNil or: [
+				 aClub isEmptyOrNil or: [
+					 aContract < 60000 or: [ aGoalsScored < 0 ] ] ] ] ]) ifTrue: [
+		self error: 'Invalid Footballer parameters' ].
 
-{ #category : #comparing }
-Footballer >> = anotherAthlete [
-	"Перевіряє чи доходи спортсменів рівні"
-
-	^ self calculateIncome = anotherAthlete calculateIncome
-]
-
-{ #category : #comparing }
-Footballer >> > anotherAthlete [
-	"Перевіряє чи дохід поточного спортсмена більший"
-
-	^ anotherAthlete calculateIncome < self calculateIncome
+	^ self new
+		  surname: aSurname;
+		  age: anAge;
+		  citizenship: aCitizenship;
+		  club: aClub;
+		  annualContract: aContract;
+		  goalsScored: aGoalsScored;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -145,16 +144,32 @@ Footballer >> initialize [
 
 { #category : #printing }
 Footballer >> printOn: aStream [
-    "Виводить інформацію про футболіста"
-    super printOn: aStream.
-    aStream 
-        nextPutAll: ' (Футболіст)';
-        cr;
-        nextPutAll: 'Клуб: '; nextPutAll: club asString;
-        cr;
-        nextPutAll: 'Контракт: '; nextPutAll: annualContract asString; nextPutAll: ' грн';
-        cr;
-        nextPutAll: 'Забито голів: '; nextPutAll: goalsScored asString;
-        cr;
-        nextPutAll: 'Загальний дохід: '; nextPutAll: self calculateIncome asString; nextPutAll: ' грн'
+	"Виводить інформацію про футболіста"
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: ' (Футболіст)';
+		cr;
+		nextPutAll: 'Клуб: ';
+		print: club;
+		cr;
+		nextPutAll: 'Контракт: ';
+		print: annualContract;
+		nextPutAll: ' грн';
+		cr;
+		nextPutAll: 'Забито голів: ';
+		print: goalsScored;
+		cr;
+		nextPutAll: 'Загальний дохід: ';
+		print: self calculateIncome;
+		nextPutAll: ' грн'
+]
+
+{ #category : #calculating }
+Footballer >> salary [
+	"Розраховує дохід футболіста: контракт + 1% за кожен забитий гол"
+
+	| goalBonus |
+	goalBonus := goalsScored * (annualContract * 0.01).
+	^ annualContract + goalBonus
 ]

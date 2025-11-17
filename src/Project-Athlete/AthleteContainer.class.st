@@ -10,6 +10,7 @@
 - Виведення всіх спортсменів з їхнім доходом
 
 Приклад використання:
+```
     container := AthleteContainer new.
     container addFootballerWithSurname: 'Шевченко' age: 35 
         citizenship: 'Україна' club: 'Динамо' contract: 5000000 goals: 25.
@@ -18,7 +19,7 @@
     ukrainians := container ukrainianAthletes.
     container increaseAgeByOneYear.
     container printAll.
-
+```
 Змінні екземпляра:
     athletes    <OrderedCollection>    Колекція об'єктів спортсменів
 "
@@ -32,16 +33,16 @@ Class {
 }
 
 { #category : #accessing }
-AthleteContainer >> add: anObject [
+AthleteContainer >> add: anAthlete [
 	"Додає спортсмена до контейнера"
 
-	(anObject isKindOf: Athlete)
-		ifTrue: [ athletes add: anObject ]
+	(anAthlete isKindOf: Athlete)
+		ifTrue: [ athletes add: anAthlete ]
 		ifFalse: [
 			self error:
-				'Недопустимий тип обʼєкта для колекції атлетів: ' , anObject ].
+				'Недопустимий тип обʼєкта для колекції атлетів: ' , anAthlete ].
 
-	^ anObject
+	^ anAthlete
 ]
 
 { #category : #adding }
@@ -150,11 +151,13 @@ AthleteContainer >> athletes [
     ^ athletes
 ]
 
-{ #category : #searching }
+{ #category : #accessing }
 AthleteContainer >> findRichestAthlete [
-	"Знаходить спортсмена з найбільшим доходом"
 
-	^ athletes max: [ :a :b | a salary <= b salary ]
+	| richest |
+	richest := athletes first.
+	athletes do: [ :each | each > richest ifTrue: [ richest := each ] ].
+	^ richest
 ]
 
 { #category : #operations }
@@ -184,25 +187,25 @@ AthleteContainer >> isRichestFootballer [
 
 { #category : #printing }
 AthleteContainer >> printAll [
-    "Друкує інформацію про всіх спортсменів"
-    athletes ifEmpty: [ 
-        ^ 'Контейнер порожній' 
-    ].
-    
-    ^ String streamContents: [ :stream |
-        stream nextPutAll: 'Список спортсменів:'; cr; cr.
-        athletes doWithIndex: [ :athlete :index |
-            stream 
-                nextPutAll: index asString, '. ';
-                nextPutAll: athlete surname;
-                nextPutAll: ' (';
-                nextPutAll: athlete class name;
-                nextPutAll: ') - Дохід: ';
-                nextPutAll: athlete calculateIncome asString;
-                nextPutAll: ' грн';
-                cr
-        ]
-    ]
+	"Друкує інформацію про всіх спортсменів"
+
+	athletes ifEmpty: [ ^ 'Контейнер порожній' ].
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: 'Список спортсменів:';
+			  cr;
+			  cr.
+		  athletes doWithIndex: [ :athlete :index |
+			  stream
+				  nextPutAll: index asString , '. ';
+				  nextPutAll: athlete surname;
+				  nextPutAll: ' (';
+				  nextPutAll: athlete class name;
+				  nextPutAll: ') - Дохід: ';
+				  print: athlete salary;
+				  nextPutAll: ' грн';
+				  cr ] ]
 ]
 
 { #category : #accessing }

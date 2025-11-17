@@ -80,3 +80,24 @@ FootballerTest >> testInitialize [
     self assert: newFootballer annualContract equals: 0.
     self assert: newFootballer goalsScored equals: 0
 ]
+
+{ #category : #tests }
+FootballerTest >> testNewWithParameters [
+	"Перевірка правильної ініціалізації футболіста"
+
+	| f1 |
+	f1 := Footballer
+		      newWithSurname: 'Alvarez'
+		      age: 20
+		      citizenship: 'Mexican'
+		      club: 'San Jose'
+		      annualContract: 30000
+		      goalsScored: 3.
+
+	self assert: f1 surname equals: 'Alvarez'.
+	self assert: f1 age equals: 20.
+	self assert: f1 citizenship equals: 'Mexican'.
+	self assert: f1 club equals: 'San Jose'.
+	self assert: f1 annualContract equals: 30000.
+	self assert: f1 goalsScored equals: 3
+]

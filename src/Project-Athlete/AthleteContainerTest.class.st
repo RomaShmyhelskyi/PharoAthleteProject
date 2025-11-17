@@ -12,39 +12,40 @@ Class {
 
 { #category : #running }
 AthleteContainerTest >> setUp [
-    "Підготовка тестових даних перед кожним тестом"
-    super setUp.
-    
-    container := AthleteContainer new.
-    
-    "Створення тестових футболістів"
-    footballer1 := Footballer new.
-    footballer1 surname: 'Шевченко'.
-    footballer1 age: 35.
-    footballer1 citizenship: 'Україна'.
-    footballer1 club: 'Динамо Київ'.
-    footballer1 annualContract: 5000000.
-    footballer1 goalsScored: 25.
-    
-    footballer2 := Footballer new.
-    footballer2 surname: 'Ronaldo'.
-    footballer2 age: 38.
-    footballer2 citizenship: 'Португалія'.
-    footballer2 club: 'Al Nassr'.
-    footballer2 annualContract: 20000000.
-    footballer2 goalsScored: 30.
-    
-    "Створення тестового тенісиста"
-    tennisPlayer1 := TennisPlayer new.
-    tennisPlayer1 surname: 'Світоліна'.
-    tennisPlayer1 age: 28.
-    tennisPlayer1 citizenship: 'Україна'.
-    tennisPlayer1 worldRanking: 15.
-    tennisPlayer1 lastThreePrizeMoney: #(500000 600000 700000)
+	"Підготовка тестових даних перед кожним тестом"
+
+	super setUp.
+
+	container := AthleteContainer new.
+
+	"Створення тестових футболістів"
+	footballer1 := Footballer
+		               newWithSurname: 'Альварез'
+		               age: 26
+		               citizenship: 'Мексика'
+		               club: 'Сан Хосе'
+		               annualContract: 136000
+		               goalsScored: 3.
+
+	footballer2 := Footballer
+		               newWithSurname: 'Шевченко'
+		               age: 21
+		               citizenship: 'Україна'
+		               club: 'Шахтар'
+		               annualContract: 753000
+		               goalsScored: 3.
+
+	"Створення тестового тенісиста"
+	tennisPlayer1 := TennisPlayer
+		                 newWithSurname: 'Світоліна'
+		                 age: 28
+		                 citizenship: 'Україна'
+		                 worldRanking: 15
+		                 lastThreePrizeMoney: #( 500000 600000 700000 )
 ]
 
 { #category : #'tests - adding' }
-AthleteContainerTest >> testAddAthlete [
+AthleteContainerTest >> testAdd [
     "Перевірка додавання одного спортсмена"
     container add: footballer1.
     
@@ -89,6 +90,17 @@ AthleteContainerTest >> testAthletes [
     
     self assert: container athletes size equals: 2.
     self assert: (container athletes isKindOf: OrderedCollection)
+]
+
+{ #category : #'tests - accessing' }
+AthleteContainerTest >> testFindRichestAthlete [
+
+	container
+		add: footballer1;
+		add: footballer2;
+		add: tennisPlayer1.
+
+	self assert: tennisPlayer1 equals: container findRichestAthlete
 ]
 
 { #category : #'tests - initialization' }
