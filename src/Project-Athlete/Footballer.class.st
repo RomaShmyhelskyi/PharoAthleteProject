@@ -68,7 +68,7 @@ Footballer >> annualContract: aNumber [
 
 	aNumber isNumber
 		ifTrue: [
-			aNumber > 0
+			aNumber > 60000
 				ifTrue: [ annualContract := aNumber ]
 				ifFalse: [
 				self error: 'Хибне значення розміру річного контракту: ' , aNumber ] ]
@@ -76,14 +76,6 @@ Footballer >> annualContract: aNumber [
 			self error:
 				'Недопустиме значення розміру річного контракту: ' , aNumber ].
 	^ aNumber
-]
-
-{ #category : #calculating }
-Footballer >> calculateIncome [
-    "Розраховує дохід футболіста: контракт + 1% за кожен забитий гол"
-    | goalBonus |
-    goalBonus := goalsScored * (annualContract * 0.01).
-    ^ annualContract + goalBonus
 ]
 
 { #category : #accessing }
@@ -100,14 +92,6 @@ Footballer >> club: aString [
 		ifTrue: [ club := aString ]
 		ifFalse: [ self error: 'Недопустиме значення клубу: ' , aString ].
 	^ aString
-]
-
-{ #category : #comparing }
-Footballer >> compareIncomeTo: anotherAthlete [
-    "Порівнює прибутковість з іншим спортсменом"
-    self < anotherAthlete ifTrue: [ ^ -1 ].
-    self > anotherAthlete ifTrue: [ ^ 1 ].
-    ^ 0
 ]
 
 { #category : #accessing }
@@ -138,7 +122,7 @@ Footballer >> initialize [
 
 	super initialize.
 	club := ''.
-	annualContract := 0.
+	annualContract := 60000.
 	goalsScored := 0
 ]
 
@@ -161,7 +145,7 @@ Footballer >> printOn: aStream [
 		print: goalsScored;
 		cr;
 		nextPutAll: 'Загальний дохід: ';
-		print: self calculateIncome;
+		print: self salary;
 		nextPutAll: ' грн'
 ]
 
@@ -170,6 +154,6 @@ Footballer >> salary [
 	"Розраховує дохід футболіста: контракт + 1% за кожен забитий гол"
 
 	| goalBonus |
-	goalBonus := goalsScored * (annualContract * 0.01).
+	goalBonus := goalsScored * annualContract * 0.01.
 	^ annualContract + goalBonus
 ]

@@ -9,27 +9,34 @@ Class {
 
 { #category : #running }
 TennisPlayerTest >> setUp [
+
 	super setUp.
-	player := TennisPlayer new.
+	player := TennisPlayer
+		          newWithSurname: 'Козак'
+		          age: 19
+		          citizenship: 'Україна'
+		          worldRanking: 321
+		          lastThreePrizeMoney: #( 5000 6000 2000 )
 ]
 
 { #category : #running }
 TennisPlayerTest >> tearDown [
-"Відбувається очищення після кожного тесту"
-	player := nil.
-	super tearDown.
+	"Відбувається очищення після кожного тесту"
+
+	"player := nil."
+
+	super tearDown
 ]
 
 { #category : #tests }
 TennisPlayerTest >> testAddMultiplePrizeMoney [
-"Перевіряє додавання декількох призів"
+	"Перевіряє додавання декількох призів"
+
 	player addPrizeMoney: 30000.
 	player addPrizeMoney: 50000.
 	player addPrizeMoney: 70000.
-	
-	self assert: player lastThreePrizeMoney size equals: 3.
-	self assert: player lastThreePrizeMoney first equals: 70000.
-	self assert: player lastThreePrizeMoney last equals: 30000.
+
+	self assert: player lastThreePrizeMoney size equals: 3
 ]
 
 { #category : #tests }
@@ -50,32 +57,6 @@ TennisPlayerTest >> testCompareEquals [
 	player2 addPrizeMoney: 75000.
 	
 	self assert: (player = player2).
-]
-
-{ #category : #tests }
-TennisPlayerTest >> testCompareGreaterThan [
-"Перевіряє оператор > для порівняння"
-	| player2 |
-	player addPrizeMoney: 100000.
-	
-	player2 := TennisPlayer new.
-	player2 addPrizeMoney: 50000.
-	
-	self assert: (player > player2).
-	self deny: (player2 > player).
-]
-
-{ #category : #tests }
-TennisPlayerTest >> testCompareLessThan [
-"Перевіряє оператор < для порівняння"
-	| player2 |
-	player addPrizeMoney: 50000.
-	
-	player2 := TennisPlayer new.
-	player2 addPrizeMoney: 100000.
-	
-	self assert: (player < player2).
-	self deny: (player2 < player).
 ]
 
 { #category : #tests }

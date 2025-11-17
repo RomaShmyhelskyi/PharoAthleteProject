@@ -67,19 +67,13 @@ TennisPlayer class >> newWithSurname: aSurname age: anAge citizenship: aCitizens
 ]
 
 { #category : #operations }
-TennisPlayer >> addPrizeMoney: amount [
-	"Додає призові з нового турніру. Зберігає тільки останні 3 турніри"
+TennisPlayer >> addPrizeMoney: aPrize [
 
-	amount isNumber
-		ifTrue: [
-			amount > 0
-				ifTrue: [
-					lastThreePrizeMoney addFirst: amount.
-					lastThreePrizeMoney removeLast ]
-				ifFalse: [ self error: 'Хибне значення: ' , amount ] ]
-		ifFalse: [
-			self error:
-				'Недопустиме значення призових з останнього турніру: ' , amount ]
+	(aPrize isNumber and: aPrize >= 2000) ifFalse: [ ^ self ].
+	self lastThreePrizeMoney
+		removeFirst;
+		add: aPrize.
+	^ aPrize
 ]
 
 { #category : #calculating }
@@ -93,7 +87,7 @@ TennisPlayer >> initialize [
 
 	super initialize.
 	worldRanking := 0.
-	lastThreePrizeMoney := OrderedCollection new: 3
+	lastThreePrizeMoney := OrderedCollection newFromArray: #( 0 0 0 )
 ]
 
 { #category : #accessing }
