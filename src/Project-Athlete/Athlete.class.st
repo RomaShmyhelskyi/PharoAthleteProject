@@ -25,6 +25,21 @@ Class {
 	#category : #'Project-Athlete'
 }
 
+{ #category : #'as yet unclassified' }
+Athlete class >> createWithDialog [
+
+	| window anAthlete |
+	window = CreateAthletePresenter new openModal.
+
+	window isOk ifFalse: [ ^ nil ].
+
+	anAthlete := Athlete
+		             newWithSurname: window surname
+		             age: window age
+		             citizenship: window citizenship.
+	^ anAthlete
+]
+
 { #category : #'file operations' }
 Athlete class >> example_1 [
 
